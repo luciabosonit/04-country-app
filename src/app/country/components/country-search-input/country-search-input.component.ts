@@ -11,10 +11,10 @@ export class CountrySearchInputComponent {
   placeholder: string = "";
 
   @Output()
-  eventChild = new EventEmitter<string>();
+  value = new EventEmitter<string>();
 
   onSearchChild(txtCapital: string){
-    this.eventChild.emit(txtCapital);
+    this.value.emit(txtCapital);
   }
 
  }

@@ -1,17 +1,38 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, resource, signal } from '@angular/core';
 import { CountrySearchInputComponent } from "../../components/country-search-input/country-search-input.component";
 import { CountryListComponent } from "../../components/country-list/country-list.component";
 import { CountryService } from '../../services/country.service';
-import { Country } from '../../interfaces/country.interface';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-by-capital-page',
   imports: [CountrySearchInputComponent, CountryListComponent],
   templateUrl: './by-capital-page.component.html',
 })
+
 export class ByCapitalPageComponent {
 
   countryService = inject(CountryService);
+  txtCapital = signal("");
+
+  countryResource = resource({
+
+    request: () => ({ txtCapital: this.txtCapital() }),
+    loader: async({ request }) => {
+
+      if (!request.txtCapital) return [];
+
+      return await firstValueFrom(
+
+        this.countryService.searchByCapital(request.txtCapital)
+
+      );
+
+    }
+
+  })
+
+  /*
 
   //Distintos estados de la petición
 
@@ -46,5 +67,7 @@ export class ByCapitalPageComponent {
 
     })
   }
+
+  */
 
  }
