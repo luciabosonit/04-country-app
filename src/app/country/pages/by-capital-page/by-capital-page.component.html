@@ -5,4 +5,12 @@
 
 <!--Sección de la tabla-->
 
-<country-list [countries]="countriesList()"></country-list>
+@if (isError()) {
+
+  <h3>{{ isError() }}</h3>
+
+} @else {
+
+  <country-list [countries]="countriesList()"></country-list>
+
+}
