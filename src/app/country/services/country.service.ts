@@ -25,6 +25,28 @@ export class CountryService {
 
   }
 
+  searchByCountry(query: string){
+
+    query = query.toLowerCase();
+    return this.http.get<RESTCountry[]>(`${API_URL}/name/${query}`)
+    .pipe(map((resp) => CountryMapper.mapRestCountryArrayToCountryArray(resp)), catchError(error => {
+      console.log("Error fetching", error);
+      return throwError(() => new Error("No se pudieron obtener países."));
+    }));
+
+  }
+
+  searchByRegion(query: string){
+
+    query = query.toLowerCase();
+    return this.http.get<RESTCountry[]>(`${API_URL}/region/${query}`)
+    .pipe(map((resp) => CountryMapper.mapRestCountryArrayToCountryArray(resp)), catchError(error => {
+      console.log("Error fetching", error);
+      return throwError(() => new Error("No se pudieron obtener países."));
+    }));
+
+  }
+
   constructor() { }
 
 }
